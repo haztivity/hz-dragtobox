@@ -1,0 +1,29 @@
+/* Estilos de prueba. NO UTILIZAR en proyecto*/
+/* Common */
+@import "../assets/styles/common/config";
+@import "../assets/styles/common/function";
+@import "../assets/styles/common/reset";
+@import "../assets/styles/common/colors";
+@import "../../../node_modules/@haztivity/hz-navbar/src/scss/_hz-navbar.theme-default.scss";
+@import "~jq-dragtobox/src/assets/styles/dragtobox.scss";
+/* End common */
+/* Components */
+body {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1em;
+}
+.card{
+    width: 200px;
+    height: 200px;
+}
+ .front{
+
+     background-color: #63a35c;
+ }
+
+.back{
+    background-color: #ccc;
+}
+
+/* End components */
