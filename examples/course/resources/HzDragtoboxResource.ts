@@ -3,7 +3,8 @@
  * Copyright Davinchi. All Rights Reserved.
  */
 import {Resource,ResourceController,$,EventEmitterFactory,DataOptions} from "@haztivity/core";
-import "jquery-ui-dist/jquery-ui.js";
+import "dragula";
+import "jquery-ui";
 import "jq-dragtobox";
 @Resource(
     {
@@ -22,9 +23,6 @@ export class HzDragtoboxResource extends ResourceController {
     public static readonly NAMESPACE = "hzDragtobox";
     protected _DataOptions:DataOptions;
     protected _dragtoboxInstance:any;
-    protected _isOpen:boolean=false;
-    protected _id;
-    protected _namespace;
 
     /**
      * Recurso de tooltip para Haztivity.
@@ -37,55 +35,87 @@ export class HzDragtoboxResource extends ResourceController {
         this._DataOptions = _DataOptions;
     }
 
+    /**
+     * Initialize the resource
+     * @param options   Options for hz-dragtobox
+     * @param config
+     */
     init(options, config?) {
         this._config = config;
-        this._id = new Date().getTime();
-        this._namespace = HzDragtoboxResource.NAMESPACE + this._id;
         this._options = options;
         this.refresh();
     }
+
+    /**
+     * Initialize the widget
+     */
     public refresh(){
+        //If there are a instance, destroy it
         if(this._dragtoboxInstance){
             this._dragtoboxInstance.destroy();
         }
-
-        let dragtoboxOptions = this._DataOptions.getDataOptions(this._$element, "hz-dragtobox");
+        //Get the options for the widget
+        let dragtoboxOptions = this._DataOptions.getDataOptions(this._$element, "jq-dragtobox");
+        //merge with defaults
         this._options.dragtoboxOptions = this._$.extend(true,{},HzDragtoboxResource.DEFAULTS, dragtoboxOptions);
+        //Create the widget
         this._$element.dragtobox(this._options.dragtoboxOptions);
-        this._dragtoboxInstance = this._$element.data("dragtoboxModel");
+        //store the instance
+        this._dragtoboxInstance = this._$element.dragtobox("instance");
         this._assignEvents();
     }
 
+    /**
+     * Get the instance of the widget
+     * @returns {any}
+     */
     public getInstance(): any {
         return this._dragtoboxInstance;
     }
+
+    /**
+     * Disable the resource and the widget
+     */
     public disable(){
         if(super.disable()){
-
+            this._dragtoboxInstance.disable();
         }
     }
+
+    /**
+     * Enable the resource and the widget
+     */
     public enable(){
         if(super.enable()){
-
+            this._dragtoboxInstance.enable();
         }
     }
 
+    /**
+     * Assign the events to handle for the widget
+     * @private
+     */
     protected _assignEvents(){
         this._$element.off("."+HzDragtoboxResource.NAMESPACE)
-            .one("dragtobox:completed."+HzDragtoboxResource.NAMESPACE,this._onResourceDone.bind(this))
-            .on("click."+HzDragtoboxResource.NAMESPACE+" hover."+HzDragtoboxResource.NAMESPACE,">*",this._onInteraction.bind(this));
+            .one("dragtobox:completed."+HzDragtoboxResource.NAMESPACE,this._onResourceDone.bind(this));
     }
-    protected _onInteraction(e){
-        if(this.isDisabled()){
-            e.stopPropagation();
-        }
-    }
+
+    /**
+     * Invoked when the widget it's done. Mark the resource as completed and disable the widget
+     * @param e
+     * @private
+     */
     protected _onResourceDone (e){
+        this._dragtoboxInstance.disable();
         this._markAsCompleted();
     }
+
+    /**
+     * Destroy the resource
+     */
     public destroy(){
         if(this._dragtoboxInstance) {
-
+            this._dragtoboxInstance.destroy();
         }
         super.destroy();
     }

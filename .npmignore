@@ -1,10 +1,10 @@
-build
 examples
 node_modules
 .fusebox
 .haztivycli.config.ts
 .haztivycli.config.js
 .idea
+dist/
 *.log
 ### VisualStudioCode template
 .vscode/*

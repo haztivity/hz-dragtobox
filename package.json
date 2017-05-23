@@ -25,7 +25,7 @@
   "homepage": "https://github.com/haztivity/hz-dragtobox/",
   "dependencies": {
     "@haztivity/core": "^0.6.2",
-    "jq-dragtobox": "^0.2.0",
+    "jq-dragtobox": "^0.4.0",
     "jquery-ui-dist": "^1.12.1"
   },
   "devDependencies": {

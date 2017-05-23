@@ -4,6 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @license
  * Copyright Davinchi. All Rights Reserved.
  */
-var HzFillgapsResource_1 = require("./HzFillgapsResource");
-exports.HzFillgapsResource = HzFillgapsResource_1.HzFillgapsResource;
-//# sourceMappingURL=HzFillgaps.js.map
+var HzDragtoboxResource_1 = require("./HzDragtoboxResource");
+exports.HzDragtoboxResource = HzDragtoboxResource_1.HzDragtoboxResource;
+//# sourceMappingURL=HzDragtobox.js.map
